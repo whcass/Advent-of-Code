@@ -1,1 +1,1 @@
-use Digest::MD5 qw(md5_hex);my $i=0;while(){$i++;$_=md5_hex("bgvyzdsv$i");s/^0{5,}/last/e;}print $i;
+use Digest::MD5 qw(md5_hex);my$i=0;while(){$i++;$_=md5_hex("bgvyzdsv$i");s/^0{5,}/last/e;}print$i;
