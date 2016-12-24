@@ -39,6 +39,6 @@ jnz c -5";
 #dec b
 #jnz 1 -2";
 
-my@cA=();push @cA,$_ for split/\n/,$l;my%rV=(c=>0);my$i=0;
+my@cA=();push @cA,$_ for split/\n/,$l;my%rV=(c=>1);my$i=0;
 $cA[$i]=~/^cpy (.+)\s(.)/ ?do{my $reg = $2;$1=~/([abcd])/ ?do{my$sR=$1;$rV{$reg}=$rV{$sR};}:do{$rV{$reg}=$1};$i++;}:$cA[$i]=~/^inc\s([abcd])/ ?do{$rV{$1}=$rV{$1}+1;$i++;}:$cA[$i]=~/^dec\s([abcd])/ ?do{$rV{$1}=$rV{$1}-1;$i++;}:$cA[$i]=~/^jnz\s(\d+|[abcd])\s(.+)/ ?do{my$in=$2;my$v=$1;$v=~s/([abcd])/$v=$rV{$v}/e;$v!=0?do{$i+=$in}:$i++;}:0 while $i<@cA;
 print $rV{'a'};
