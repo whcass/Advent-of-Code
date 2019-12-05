@@ -6,10 +6,10 @@ sub GetParameterModes {
 	my $code = $_[0];
 	my @digit = split//,$code;
 	my $len = @digit;
-	print "len:$len\n";
+
 	if ($len == 1)
 	{
-		return (0,0,0,$digit[1]);
+		return (0,0,0,$digit[0]);
 	}
 	elsif($len == 3)
 	{
@@ -29,38 +29,45 @@ sub GetParameterModes {
 
 my $file = "day5.txt";
 open my $data, $file or die "Could not open file: $!";
-my $test = "1002,4,3,4,33";
+my $test = "1101,100,-1,4,0";
 my @code = split /,/,$test;
-$code[1] = 12;
-$code[2] = 2;
+# $code[1] = 12;
+# $code[2] = 2;
 my $ptr = 0;
 my $input = 1;
 my  $ptrinc;
-#while (1){
+# print "second:$code[1]\n";
+while (1){
 	my $opcode = $code[$ptr];
+	if($opcode == 99)
+	{
+		last;
+	}
 	my @modes = GetParameterModes($opcode);
-		
+	print "modes:@modes\n";
 	my $inst = $modes[3];
 	my $p1 = $modes[2];
 	my $p2 = $modes[1];
 	my $p3 = $modes[0];
 	print "inst:$inst\n";
-	if($inst == 99)
+	print "p1:$p1\n";
+	print "p2:$p2\n";
+	
+	if($inst == 1)
 	{
-		last;
-	}
-	elsif($inst == 1)
-	{
-		my $first = $code[$code[$ptr+1]];
-		my $second = $code[$code[$ptr+2]];
+		my $first = $p1==0 ? $code[$code[$ptr+1]] : $code[$ptr+1];
+		print "first:$first\n";
+		my $second = $p2==0 ? $code[$code[$ptr+2]] : $code[$ptr+2];
+		print "second:$second\n";
 		my $out = $code[$ptr+3];
 		$code[$out] = $first+$second;
 		$ptrinc = 4;
 	}
 	elsif($inst == 2)
 	{
-		my $first = $code[$code[$ptr+1]];
-		my $second = $code[$code[$ptr+2]];
+		my $first = $p1==0 ? $code[$code[$ptr+1]] : $code[$ptr+1];
+		print "first:$first - $code[$code[$ptr+1]]\n";
+		my $second = $p2==0 ? $code[$code[$ptr+2]] : $code[$ptr+2];
 		my $out = $code[$ptr+3];
 		$code[$out] = $first*$second;
 		$ptrinc = 4;
@@ -78,6 +85,7 @@ my  $ptrinc;
 		$ptrinc = 2;
 	}
 	$ptr+=$ptrinc;
-	#}
+	# print "ptr:$code[$ptr]\n";
+	}
 
-print "$code[0]\n";
+# print "$code[0]\n";
