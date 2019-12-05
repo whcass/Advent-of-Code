@@ -92,8 +92,9 @@ sub Computer {
         elsif ( $inst == 4 ) {
 
             # Ouput at position
-            my $out = $code[ $ptr + 1 ];
-            print "[*] $code[$out]\n";
+            my $out = $p1 == 0 ? $code[$code[$ptr+1]] : $code[ $ptr + 1 ];
+            # print "@code\n";
+            print "[*] $out\n";
             $ptrinc = 2;
         }
         elsif ( $inst == 5 ) {
@@ -104,7 +105,7 @@ sub Computer {
             my $second =
               $p2 == 0 ? $code[ $code[ $ptr + 2 ] ] : $code[ $ptr + 2 ];
             # $ptr    = $first != 0 ? $second : $ptr;
-            if ($first == 0){
+            if ($first != 0){
               $ptr = $second;
               $ptrinc = 0;
             }else{
@@ -172,7 +173,7 @@ my $test = "3,21,1008,21,8,20,1005,20,22,107,8,21,20,1006,20,31,1106,0,36,98,0,0
 # print "test : 1 - out: ";
 # my @input = split /,/,<$data>;
 my @input = GenTestInput($test);
-Computer( \@input, 8 );
+Computer( \@input, 9 );
 
 # @input = GenTestInput($file);
 # Computer(\@input,5);
