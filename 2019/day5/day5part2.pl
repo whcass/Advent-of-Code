@@ -168,12 +168,12 @@ sub GenTestInput {
 
 my $file = "day5.txt";
 open my $data, $file or die "Could not open file: $!";
-my $test = "3,21,1008,21,8,20,1005,20,22,107,8,21,20,1006,20,31,1106,0,36,98,0,0,1002,21,125,20,4,20,1105,1,46,104,999,1105,1,46,1101,1000,1,20,4,20,1105,1,46,98,99";
+# my $test = "3,21,1008,21,8,20,1005,20,22,107,8,21,20,1006,20,31,1106,0,36,98,0,0,1002,21,125,20,4,20,1105,1,46,104,999,1105,1,46,1101,1000,1,20,4,20,1105,1,46,98,99";
 # my $test = "3,3,1105,-1,9,1101,0,0,12,4,12,99,1";
 # print "test : 1 - out: ";
-# my @input = split /,/,<$data>;
-my @input = GenTestInput($test);
-Computer( \@input, 9 );
+my @input = split /,/,<$data>;
+# my @input = GenTestInput($test);
+Computer( \@input, 5 );
 
 # @input = GenTestInput($file);
 # Computer(\@input,5);
