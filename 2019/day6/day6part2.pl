@@ -17,7 +17,7 @@ D)I
 E)J
 J)K
 K)L";
-my $file = "day6.txt";
+my $file = "part2test.txt";
 open my $data, $file or die "Could not open file: $!";
 my %bodies;
 my $bodyCount = 0;
@@ -46,9 +46,51 @@ my $root  = $bodies{'COM'};
 my $total = 0;
 
 # print Dumper(%bodies);
-# print Dumper($root->getAllChildren);
-foreach my $child ( $root->getAllChildren ) {
-    count( $child->getNodeValue, 0 );
+# Globals are grim yo
+print "finding you\n";
+my @pathToYou = findPath($root,"YOU");
+print "finding santa\n";
+my @pathToSanta = findPath($root,'SAN');
+# print @pathToSanta;
+# print Dumper($bodies{'YOU'});
+# foreach my $child ( $root->getAllChildren ) {
+#     count( $child->getNodeValue, 0 );
+# }
+
+
+sub findPath
+{
+    my $who = $_[1];
+    my $root = $_[0];
+
+    my ($ignore,@path) = findWho($root->getNodeValue,$who);
+    @path = reverse(@path);
+    print "@path\n";
+    return 
+}
+
+# Weird things happen in this function
+
+sub findWho
+{
+    # my @path = @{ $_[0] };
+    my $node = $bodies{$_[0]};
+    my $who = $_[1];
+    my @path;
+    # my $bodyName = $node->getNodeValue;
+    foreach my $child ($node->getAllChildren){
+        if($bodies{$child->getNodeValue}){
+            my($record,@path) = findWho($child->getNodeValue,$who);
+            if($record){
+                push @path, $child->getNodeValue;
+                return 1, @path;
+            }
+        }else{
+            if($child->getNodeValue eq $who){
+                return (1,$child->getNodeValue);
+            }
+        }
+    }
 }
 
 sub count {
@@ -70,7 +112,7 @@ sub count {
         }
     }
 }
-print "[*] indirects: $total\n";
-print "[*] bodyCount: $bodyCount\n";
-my $count = $total + $bodyCount;
-print "[*] total: $count\n";
+# print "[*] indirects: $total\n";
+# print "[*] bodyCount: $bodyCount\n";
+# my $count = $total + $bodyCount;
+# print "[*] total: $count\n";
