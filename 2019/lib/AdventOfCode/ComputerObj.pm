@@ -11,10 +11,12 @@ our @EXPORT_OK = qw (new run);
 sub new {
   my $class = shift;
   my @code = @{$_[0]};
+  my $permute = $_[1];
+  $code[$code[1]] = $permute;
   # print "@code";
   my $self = bless{
     code => [@code],
-    ptr =>0,
+    ptr =>2,
     mem=>[],
   }, $class;
   return $self;
@@ -65,8 +67,8 @@ sub Computer {
         }
         my @modes = GetParameterModes($opcode);
         # Debug help
-        # print "================ step: $steps\n";
-        # print "modes:@modes\n";
+        print "================ step: $steps\n";
+        print "modes:@modes\n";
         my $inst = $modes[3];
         my $p1   = $modes[2];
         my $p2   = $modes[1];
@@ -80,6 +82,7 @@ sub Computer {
             my $second =
               $p2 == 0 ? $code[ $code[ $ptr + 2 ] ] : $code[ $ptr + 2 ];
             my $out = $code[ $ptr + 3 ];
+            print "$first+$second\n";
             $code[$out] = $first + $second;
             $ptrinc = 4;
         }
@@ -98,6 +101,7 @@ sub Computer {
 
             # Read an input
             my $out = $code[ $ptr + 1 ];
+            print "[*] input:$input\n";
             $code[$out] = $input;
             $inputptr++;
             $ptrinc = 2;
