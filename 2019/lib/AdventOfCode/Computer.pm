@@ -29,11 +29,13 @@ sub GetParameterModes {
 
 sub Computer {
     my @code  = @{ $_[0] };
-    my $input = $_[1];
+    my @input = @{$_[1]};
     my $ptr = 0;
     my $step = 4;
     my $steps = 0;
     my $ptrinc;
+    my @output;
+    my $inputptr = 0;
     while (1) {
         my $opcode = $code[$ptr];
         if ( $opcode == 99  ) {
@@ -74,14 +76,16 @@ sub Computer {
 
             # Read an input
             my $out = $code[ $ptr + 1 ];
-            $code[$out] = $input;
+            $code[$out] = $input[$inputptr];
+            $inputptr++;
             $ptrinc = 2;
         }
         elsif ( $inst == 4 ) {
 
             # Ouput at position
             my $out = $p1 == 0 ? $code[$code[$ptr+1]] : $code[ $ptr + 1 ];
-            print "[*] $out\n";
+            # print "[*] $out\n";
+            push @output, $out;
             $ptrinc = 2;
         }
         elsif ( $inst == 5 ) {
@@ -138,7 +142,7 @@ sub Computer {
         $steps++;
     }
 
-    
+    return @output;
 }
 
 
