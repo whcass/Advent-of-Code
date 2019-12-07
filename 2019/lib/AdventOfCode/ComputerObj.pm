@@ -54,6 +54,7 @@ sub Computer {
     my $input = $_[0];
     # print "input:$input";
     my $ptr = $self->{ptr};
+    # print "[*] ptr:$ptr\n";
     my $step = 4;
     my $steps = 0;
     my $ptrinc;
@@ -62,13 +63,14 @@ sub Computer {
     while (1) {
         my $opcode = $code[$ptr];
         if ( $opcode == 99  ) {
+            # print "---------------------We should halt!!!\n";
             push @{$self->@{mem}}, 99;
             last;
         }
         my @modes = GetParameterModes($opcode);
         # Debug help
-        print "================ step: $steps\n";
-        print "modes:@modes\n";
+        # print "================ step: $steps\n";
+        # print "modes:@modes\n";
         my $inst = $modes[3];
         my $p1   = $modes[2];
         my $p2   = $modes[1];
@@ -82,7 +84,7 @@ sub Computer {
             my $second =
               $p2 == 0 ? $code[ $code[ $ptr + 2 ] ] : $code[ $ptr + 2 ];
             my $out = $code[ $ptr + 3 ];
-            print "$first+$second\n";
+            # print "$first+$second\n";
             $code[$out] = $first + $second;
             $ptrinc = 4;
         }
@@ -101,7 +103,7 @@ sub Computer {
 
             # Read an input
             my $out = $code[ $ptr + 1 ];
-            print "[*] input:$input\n";
+            # print "[*] input:$input\n";
             $code[$out] = $input;
             $inputptr++;
             $ptrinc = 2;
