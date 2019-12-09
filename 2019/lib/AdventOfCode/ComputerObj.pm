@@ -13,10 +13,7 @@ sub new {
     my @code  = @{ $_[0] };
     my @array = (0) x 5000;
     @code = ( @code, @array );
-
-    # my $permute = $_[1];
-    # $code[$code[1]] = $permute;
-    # print "@code";
+    
     my $self = bless {
         code => [@code],
         ptr  => 0,
@@ -32,8 +29,6 @@ sub GetParamFromMode {
     my $base = $_[2];
     my @code = @{ $_[3] };
 
-    # $p1 == 0 ? $code[ $code[ $ptr + 1 ] ] : $code[ $ptr + 1 ];
-
     if ( $mode == 0 ) {
         return $code[ $code[$ptr] ];
     }
@@ -41,7 +36,6 @@ sub GetParamFromMode {
         return $code[$ptr];
     }
     elsif ( $mode == 2 ) {
-        # print "[*] $ptr+$base\n";
         return $code[ $code[$ptr] + $base ];
     }
 }
@@ -77,10 +71,8 @@ sub Computer {
     my @code  = @{ $self->@{code} };
     my $input = $_[0];
 
-    # print "input:$input";
     my $ptr = $self->{ptr};
 
-    # print "[*] ptr:$ptr\n";
     my $step  = 4;
     my $steps = 0;
     my $ptrinc;
@@ -89,8 +81,6 @@ sub Computer {
     while (1) {
         my $opcode = $code[$ptr];
         if ( $opcode == 99 ) {
-
-            # print "---------------------We should halt!!!\n";
             push @{ $self->@{mem} }, 99;
             last;
         }
@@ -119,7 +109,6 @@ sub Computer {
                 $out = $code[ $ptr + 3 ];
             }
 
-            # print "$first+$second\n";
             $code[$out] = $first + $second;
             $ptrinc = 4;
 
@@ -133,7 +122,6 @@ sub Computer {
             my $second =
               GetParamFromMode( $p2, $ptr + 2, $self->{base}, \@code );
 
-           # my $out = GetParamFromMode( $p3, $ptr + 3, $self->{base}, \@code );
             my $out;
             if ( $p3 == 2 ) {
                 $out = $code[ $ptr + 3 ] + $self->{base};
@@ -142,31 +130,20 @@ sub Computer {
                 $out = $code[ $ptr + 3 ];
             }
 
-            # my $out = $code[ $ptr + 3 ];
-
-            # print "---$out\n";
             $code[$out] = $first * $second;
             $ptrinc = 4;
         }
         elsif ( $inst == 3 ) {
 
             # Read an input
-            # my $out = $code[ $ptr + 1 ];
-            my $out; # GetParamFromMode( $p1, $ptr + 1, $self->{base}, \@code );
+            my $out;
             if ( $p1 == 2 ) {
                 $out = $code[ $ptr + 1 ] + $self->{base};
             }
             else {
                 $out = $code[ $ptr + 1 ];
             }
-            # print "[*] out:$out - $code[$out]\n";
 
-           # my $out = GetParamFromMode( $p1, $ptr + 1, $self->{base}, \@code );
-           # print "@code\n";
-           # print "base:$self->{base}\n";
-
-            # print "----$out\n";
-            # print "[*] input:$input\n";
             $code[$out] = $input;
             $inputptr++;
             $ptrinc = 2;
@@ -175,18 +152,8 @@ sub Computer {
 
             # Ouput at position
             my $out = GetParamFromMode( $p1, $ptr + 1, $self->{base}, \@code );
-
-            # print "[*] $out\n";
             push @{ $self->@{mem} }, $out;
-            # print "$out\n";
-
-            # $ptr += 2;
-            # $self->{ptr} = $ptr;
             $ptrinc = 2;
-
-            # last;
-            # return;
-            # $ptrinc = 2;
         }
         elsif ( $inst == 5 ) {
 
@@ -227,7 +194,6 @@ sub Computer {
             my $second =
               GetParamFromMode( $p2, $ptr + 2, $self->{base}, \@code );
 
-            # print "---$first<$second\n";
             my $out;
             if ( $p3 == 2 ) {
                 $out = $code[ $ptr + 3 ] + $self->{base};
@@ -259,11 +225,7 @@ sub Computer {
         elsif ( $inst == 9 ) {
             my $first =
               GetParamFromMode( $p1, $ptr + 1, $self->{base}, \@code );
-
-            # my $second = GetParamFromMode($p1,$ptr+2,@code);
             $self->{base} += $first;
-
-            # print $self->{base};
             $ptrinc = 2;
         }
         $ptr += $ptrinc;
