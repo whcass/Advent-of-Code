@@ -11,7 +11,11 @@ my @input = split /,/, <$data>;
 
 my $comp = AdventOfCode::ComputerObj->new( \@input );
 
+my $start = time;
 my @out = $comp->run(1);
+my $end = time;
+my $elapsed = $end-$start;
+print "[*] Finished, time elapsed:$elapsed"."s\n";
 pop @out;
 
 # print "@out";
@@ -20,4 +24,17 @@ if ( $out[0] == 2870072642 ) {
 }
 else {
     print "[*] FAIL : got:$out[0] - want:2870072642\n";
+}
+my $compB = AdventOfCode::ComputerObj->new(\@input);
+$start = time;
+@out = $compB->run(2);
+$end = time;
+$elapsed = $end-$start;
+print "[*] Finished, time elapsed:$elapsed"."s";
+pop @out;
+if ( $out[0] == 58534 ) {
+    print "[*] Pass\n";
+}
+else {
+    print "[*] FAIL : got:$out[0] - want:58534\n";
 }
