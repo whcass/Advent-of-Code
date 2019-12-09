@@ -7,10 +7,17 @@ use AdventOfCode::ComputerObj qw(new run);
 
 my $file = "day9.txt";
 open my $data, $file or die "Could not open file: $!";
-my @input            = split /,/, <$data>;
+my @input = split /,/, <$data>;
 
-my $comp =AdventOfCode::ComputerObj->new( \@input );
+my $comp = AdventOfCode::ComputerObj->new( \@input );
 
-my @out = $comp->run(2);
+my @out = $comp->run(1);
 pop @out;
-print "@out";
+
+# print "@out";
+if ( $out[0] == 2870072642 ) {
+    print "[*] Pass\n";
+}
+else {
+    print "[*] FAIL : got:$out[0] - want:2870072642\n";
+}

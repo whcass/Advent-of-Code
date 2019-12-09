@@ -13,7 +13,7 @@ sub new {
     my @code  = @{ $_[0] };
     my @array = (0) x 5000;
     @code = ( @code, @array );
-    
+
     my $self = bless {
         code => [@code],
         ptr  => 0,
@@ -37,6 +37,20 @@ sub GetParamFromMode {
     }
     elsif ( $mode == 2 ) {
         return $code[ $code[$ptr] + $base ];
+    }
+}
+
+sub GetOutParamFromMode {
+    my $mode = $_[0];
+    my $ptr  = $_[1];
+    my $base = $_[2];
+    my @code = @{ $_[3] };
+
+    if ( $mode == 2 ) {
+        return $code[$ptr] + $base;
+    }
+    else {
+        return $code[$ptr];
     }
 }
 
@@ -101,18 +115,11 @@ sub Computer {
               GetParamFromMode( $p1, $ptr + 1, $self->{base}, \@code );
             my $second =
               GetParamFromMode( $p2, $ptr + 2, $self->{base}, \@code );
-            my $out;
-            if ( $p3 == 2 ) {
-                $out = $code[ $ptr + 3 ] + $self->{base};
-            }
-            else {
-                $out = $code[ $ptr + 3 ];
-            }
+            my $out =
+              GetOutParamFromMode( $p3, $ptr + 3, $self->{base}, \@code );
 
             $code[$out] = $first + $second;
-            $ptrinc = 4;
-
-            # last;
+            $ptr += 4;
         }
         elsif ( $inst == 2 ) {
 
@@ -122,38 +129,29 @@ sub Computer {
             my $second =
               GetParamFromMode( $p2, $ptr + 2, $self->{base}, \@code );
 
-            my $out;
-            if ( $p3 == 2 ) {
-                $out = $code[ $ptr + 3 ] + $self->{base};
-            }
-            else {
-                $out = $code[ $ptr + 3 ];
-            }
+            my $out =
+              GetOutParamFromMode( $p3, $ptr + 3, $self->{base}, \@code );
 
             $code[$out] = $first * $second;
-            $ptrinc = 4;
+            $ptr += 4;
         }
         elsif ( $inst == 3 ) {
 
             # Read an input
-            my $out;
-            if ( $p1 == 2 ) {
-                $out = $code[ $ptr + 1 ] + $self->{base};
-            }
-            else {
-                $out = $code[ $ptr + 1 ];
-            }
+            my $out =
+              GetOutParamFromMode( $p1, $ptr + 1, $self->{base}, \@code );
 
             $code[$out] = $input;
             $inputptr++;
-            $ptrinc = 2;
+            $ptr += 2;
         }
         elsif ( $inst == 4 ) {
 
             # Ouput at position
+            # Use the original method for this, because reasons
             my $out = GetParamFromMode( $p1, $ptr + 1, $self->{base}, \@code );
             push @{ $self->@{mem} }, $out;
-            $ptrinc = 2;
+            $ptr += 2;
         }
         elsif ( $inst == 5 ) {
 
@@ -163,11 +161,10 @@ sub Computer {
             my $second =
               GetParamFromMode( $p2, $ptr + 2, $self->{base}, \@code );
             if ( $first != 0 ) {
-                $ptr    = $second;
-                $ptrinc = 0;
+                $ptr = $second;
             }
             else {
-                $ptrinc = 3;
+                $ptr += 3;
             }
         }
         elsif ( $inst == 6 ) {
@@ -178,11 +175,10 @@ sub Computer {
             my $second =
               GetParamFromMode( $p2, $ptr + 2, $self->{base}, \@code );
             if ( $first == 0 ) {
-                $ptr    = $second;
-                $ptrinc = 0;
+                $ptr = $second;
             }
             else {
-                $ptrinc = 3;
+                $ptr += 3;
             }
 
         }
@@ -194,15 +190,10 @@ sub Computer {
             my $second =
               GetParamFromMode( $p2, $ptr + 2, $self->{base}, \@code );
 
-            my $out;
-            if ( $p3 == 2 ) {
-                $out = $code[ $ptr + 3 ] + $self->{base};
-            }
-            else {
-                $out = $code[ $ptr + 3 ];
-            }
+            my $out =
+              GetOutParamFromMode( $p3, $ptr + 3, $self->{base}, \@code );
             $code[$out] = $first < $second ? 1 : 0;
-            $ptrinc = 4;
+            $ptr += 4;
         }
         elsif ( $inst == 8 ) {
 
@@ -211,25 +202,19 @@ sub Computer {
               GetParamFromMode( $p1, $ptr + 1, $self->{base}, \@code );
             my $second =
               GetParamFromMode( $p2, $ptr + 2, $self->{base}, \@code );
-            my $out;
-            if ( $p3 == 2 ) {
-                $out = $code[ $ptr + 3 ] + $self->{base};
-            }
-            else {
-                $out = $code[ $ptr + 3 ];
-            }
+            my $out =
+              GetOutParamFromMode( $p3, $ptr + 3, $self->{base}, \@code );
             $code[$out] = $first == $second ? 1 : 0;
-            $ptrinc = 4;
-
+            $ptr += 4;
         }
         elsif ( $inst == 9 ) {
             my $first =
               GetParamFromMode( $p1, $ptr + 1, $self->{base}, \@code );
             $self->{base} += $first;
-            $ptrinc = 2;
+            $ptr += 2;
         }
-        $ptr += $ptrinc;
-        $steps++;
+
+        # $steps++;
     }
 
     return @output;
