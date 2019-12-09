@@ -42,7 +42,7 @@ sub GetParamFromMode {
     }
     elsif ( $mode == 2 ) {
         print "[*] $ptr+$base\n";
-        return $code[ $code[ $ptr + $base ] ];
+        return $code[ $code[ $ptr]+$base];
     }
 }
 
@@ -136,9 +136,17 @@ sub Computer {
 
             # Read an input
             # my $out = $code[ $ptr + 1 ];
-            my $out = GetParamFromMode( $p1, $ptr + 1, $self->{base}, \@code );
-            print "@code\n";
-            print "base:$self->{base}\n";
+            my $out;
+            if ($p1 == 2){
+              $out = $code[$ptr+1] + $self->{base};
+            }else{
+              $out = $code[$ptr+1];
+            }
+            print "[*] out:$out - $code[$out]\n";
+
+            # my $out = GetParamFromMode( $p1, $ptr + 1, $self->{base}, \@code );
+            # print "@code\n";
+            # print "base:$self->{base}\n";
 
             # print "----$out\n";
             # print "[*] input:$input\n";
@@ -220,13 +228,12 @@ sub Computer {
 
         }
         elsif ( $inst == 9 ) {
-            my $first =
-              GetParamFromMode( $p1, $ptr + 1, $self->{base}, \@code );
+            my $first = GetParamFromMode( $p1, $ptr + 1, $self->{base}, \@code );
 
             # my $second = GetParamFromMode($p1,$ptr+2,@code);
             $self->{base} += $first;
 
-            # print $self->{base};
+            print $self->{base};
             $ptrinc = 2;
         }
         $ptr += $ptrinc;
