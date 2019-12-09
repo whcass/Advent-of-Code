@@ -54,6 +54,18 @@ sub GetOutParamFromMode {
     }
 }
 
+sub CalcInstruction {
+    my $base   = $_[0];
+    my $ptr    = $_[1];
+    my @modes  = @{ $_[2] };
+    my @code   = @{ $_[3] };
+    my $first  = GetParamFromMode( $modes[2], $ptr + 1, $base, \@code );
+    my $second = GetParamFromMode( $modes[1], $ptr + 2, $base, \@code );
+    my $out    = GetOutParamFromMode( $modes[0], $ptr + 3, $base, \@code );
+
+    return ( $first, $second, $out );
+}
+
 sub GetParameterModes {
     my $code  = $_[0];
     my @digit = split //, $code;
@@ -111,12 +123,9 @@ sub Computer {
         if ( $inst == 1 ) {
 
             # Add two parameters together
-            my $first =
-              GetParamFromMode( $p1, $ptr + 1, $self->{base}, \@code );
-            my $second =
-              GetParamFromMode( $p2, $ptr + 2, $self->{base}, \@code );
-            my $out =
-              GetOutParamFromMode( $p3, $ptr + 3, $self->{base}, \@code );
+
+            my ( $first, $second, $out ) =
+              CalcInstruction( $self->{base}, $ptr, \@modes, \@code );
 
             $code[$out] = $first + $second;
             $ptr += 4;
@@ -124,13 +133,8 @@ sub Computer {
         elsif ( $inst == 2 ) {
 
             # Multiply two parameters
-            my $first =
-              GetParamFromMode( $p1, $ptr + 1, $self->{base}, \@code );
-            my $second =
-              GetParamFromMode( $p2, $ptr + 2, $self->{base}, \@code );
-
-            my $out =
-              GetOutParamFromMode( $p3, $ptr + 3, $self->{base}, \@code );
+            my ( $first, $second, $out ) =
+              CalcInstruction( $self->{base}, $ptr, \@modes, \@code );
 
             $code[$out] = $first * $second;
             $ptr += 4;
@@ -156,60 +160,39 @@ sub Computer {
         elsif ( $inst == 5 ) {
 
             # Jump if True
-            my $first =
-              GetParamFromMode( $p1, $ptr + 1, $self->{base}, \@code );
-            my $second =
-              GetParamFromMode( $p2, $ptr + 2, $self->{base}, \@code );
-            if ( $first != 0 ) {
-                $ptr = $second;
-            }
-            else {
-                $ptr += 3;
-            }
+            my ( $first, $second ) =
+              CalcInstruction( $self->{base}, $ptr, \@modes, \@code );
+            $ptr = $first!=0?$second:($ptr+=3);
         }
         elsif ( $inst == 6 ) {
 
             # Jump if False
-            my $first =
-              GetParamFromMode( $p1, $ptr + 1, $self->{base}, \@code );
-            my $second =
-              GetParamFromMode( $p2, $ptr + 2, $self->{base}, \@code );
-            if ( $first == 0 ) {
-                $ptr = $second;
-            }
-            else {
-                $ptr += 3;
-            }
-
+            my ( $first, $second ) =
+              CalcInstruction( $self->{base}, $ptr, \@modes, \@code );
+              $ptr = $first==0?$second:($ptr+=3);
         }
         elsif ( $inst == 7 ) {
 
             # Less than
-            my $first =
-              GetParamFromMode( $p1, $ptr + 1, $self->{base}, \@code );
-            my $second =
-              GetParamFromMode( $p2, $ptr + 2, $self->{base}, \@code );
+            my ( $first, $second, $out ) =
+              CalcInstruction( $self->{base}, $ptr, \@modes, \@code );
 
-            my $out =
-              GetOutParamFromMode( $p3, $ptr + 3, $self->{base}, \@code );
             $code[$out] = $first < $second ? 1 : 0;
             $ptr += 4;
         }
         elsif ( $inst == 8 ) {
 
             # Equals
-            my $first =
-              GetParamFromMode( $p1, $ptr + 1, $self->{base}, \@code );
-            my $second =
-              GetParamFromMode( $p2, $ptr + 2, $self->{base}, \@code );
-            my $out =
-              GetOutParamFromMode( $p3, $ptr + 3, $self->{base}, \@code );
+            my ( $first, $second, $out ) =
+              CalcInstruction( $self->{base}, $ptr, \@modes, \@code );
+
             $code[$out] = $first == $second ? 1 : 0;
             $ptr += 4;
         }
         elsif ( $inst == 9 ) {
             my $first =
               GetParamFromMode( $p1, $ptr + 1, $self->{base}, \@code );
+              
             $self->{base} += $first;
             $ptr += 2;
         }
