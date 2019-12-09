@@ -135,7 +135,8 @@ sub Computer {
         elsif ( $inst == 3 ) {
 
             # Read an input
-            my $out = $code[ $ptr + 1 ];
+            # my $out = $code[ $ptr + 1 ];
+            my $out = GetParamFromMode( $p1, $ptr + 1, $self->{base}, \@code );
             print "@code\n";
             print "base:$self->{base}\n";
 
