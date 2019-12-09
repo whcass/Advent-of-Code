@@ -30,7 +30,7 @@ $start = time;
 @out = $compB->run(2);
 $end = time;
 $elapsed = $end-$start;
-print "[*] Finished, time elapsed:$elapsed"."s";
+print "[*] Finished, time elapsed:$elapsed"."s\n";
 pop @out;
 if ( $out[0] == 58534 ) {
     print "[*] Pass\n";
