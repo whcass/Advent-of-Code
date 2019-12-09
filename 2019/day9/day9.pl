@@ -11,6 +11,6 @@ my @input            = split /,/, <$data>;
 
 my $comp =AdventOfCode::ComputerObj->new( \@input );
 
-my @out = $comp->run(1);
+my @out = $comp->run(2);
 pop @out;
 print "@out";

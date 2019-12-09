@@ -41,7 +41,7 @@ sub GetParamFromMode {
         return $code[$ptr];
     }
     elsif ( $mode == 2 ) {
-        print "[*] $ptr+$base\n";
+        # print "[*] $ptr+$base\n";
         return $code[ $code[$ptr] + $base ];
     }
 }
@@ -97,8 +97,8 @@ sub Computer {
         my @modes = GetParameterModes($opcode);
 
         # Debug help
-        print "================ step: $steps\n";
-        print "modes:@modes\n";
+        # print "================ step: $steps\n";
+        # print "modes:@modes\n";
         my $inst = $modes[3];
         my $p1   = $modes[2];
         my $p2   = $modes[1];
@@ -159,7 +159,7 @@ sub Computer {
             else {
                 $out = $code[ $ptr + 1 ];
             }
-            print "[*] out:$out - $code[$out]\n";
+            # print "[*] out:$out - $code[$out]\n";
 
            # my $out = GetParamFromMode( $p1, $ptr + 1, $self->{base}, \@code );
            # print "@code\n";
@@ -178,7 +178,7 @@ sub Computer {
 
             # print "[*] $out\n";
             push @{ $self->@{mem} }, $out;
-            print "$out\n";
+            # print "$out\n";
 
             # $ptr += 2;
             # $self->{ptr} = $ptr;
@@ -263,7 +263,7 @@ sub Computer {
             # my $second = GetParamFromMode($p1,$ptr+2,@code);
             $self->{base} += $first;
 
-            print $self->{base};
+            # print $self->{base};
             $ptrinc = 2;
         }
         $ptr += $ptrinc;
