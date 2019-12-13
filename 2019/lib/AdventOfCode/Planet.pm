@@ -3,7 +3,7 @@ use strict;
 use warnings;
 use Exporter qw(import);
 
-our @EXPORT_OK = qw(new update printOut);
+our @EXPORT_OK = qw(new update printOut getEnergy);
 
 sub new {
     my $class = shift;
@@ -24,6 +24,14 @@ sub new {
     }, $class;
 
     return $self;
+}
+
+sub getEnergy {
+    my $self = shift;
+    my @pos = @{$self->@{pos}};
+    my @vel = @{$self->@{vel}};
+
+    return (abs($pos[0]) + abs($pos[1]) + abs($pos[2])) * (abs($vel[0]) + abs($vel[1]) + abs($vel[2]));
 }
 
 sub printOut {
@@ -50,6 +58,7 @@ sub update {
             @{ $self->@{vel} }[0]--;
             @{ $obj->@{vel} }[0]++;
         }
+        elsif($lhsX == $rhsX){}
         else {
             @{ $self->@{vel} }[0]++;
             @{ $obj->@{vel} }[0]--;
@@ -59,6 +68,7 @@ sub update {
             @{ $self->@{vel} }[1]--;
             @{ $obj->@{vel} }[1]++;
         }
+        elsif($lhsY == $rhsY){}
         else {
             @{ $self->@{vel} }[1]++;
             @{ $obj->@{vel} }[1]--;
@@ -68,6 +78,7 @@ sub update {
             @{ $self->@{vel} }[2]--;
             @{ $obj->@{vel} }[2]++;
         }
+        elsif($lhsZ == $rhsZ){}
         else {
             @{ $self->@{vel} }[2]++;
             @{ $obj->@{vel} }[2]--;
