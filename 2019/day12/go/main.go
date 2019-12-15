@@ -1,6 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"sync"
+)
 
 // <x=8, y=0, z=8>
 // <x=0, y=-5, z=-10>
@@ -26,6 +29,31 @@ func Part2() {
 	// B := NewPlanet(2, -10, -7)
 	// C := NewPlanet(4, -8, 8)
 	// D := NewPlanet(3, 5, -1)
+	var wg sync.WaitGroup
+	var A, B, C int
+	wg.Add(1)
+	go func() {
+		defer wg.Done()
+		A = X()
+	}()
+
+	wg.Add(1)
+	go func() {
+		defer wg.Done()
+		B = Y()
+	}()
+
+	wg.Add(1)
+	go func() {
+		defer wg.Done()
+		C = Z()
+	}()
+
+	wg.Wait()
+	fmt.Printf("[*] %d,%d,%d\n", A, B, C)
+}
+
+func X() int {
 	A := NewPlanet(8, 0, 8)
 	B := NewPlanet(0, -5, -10)
 	C := NewPlanet(16, 10, -5)
@@ -33,26 +61,65 @@ func Part2() {
 	otherPlanets := []*Planet{A, B, C, D}
 	steps := 0
 	// xmatch, ymatch, zmatch := false, false, false
-	states := []string{}
+	check := A.CheckSum() + B.CheckSum() + C.CheckSum() + D.CheckSum()
+	for {
+		A.UpdateX(otherPlanets[1:])
+		B.UpdateX(otherPlanets[2:])
+		C.UpdateX(otherPlanets[3:])
+		D.UpdateX(otherPlanets[4:])
+		checksum := A.CheckSum() + B.CheckSum() + C.CheckSum() + D.CheckSum()
+		// return steps
+		if check == checksum {
+			return steps
+		}
+		steps++
+	}
+}
+
+func Y() int {
+	A := NewPlanet(8, 0, 8)
+	B := NewPlanet(0, -5, -10)
+	C := NewPlanet(16, 10, -5)
+	D := NewPlanet(19, -10, -7)
+	otherPlanets := []*Planet{A, B, C, D}
+	steps := 0
+	// xmatch, ymatch, zmatch := false, false, false
+	check := A.CheckSum() + B.CheckSum() + C.CheckSum() + D.CheckSum()
+	for {
+		A.UpdateY(otherPlanets[1:])
+		B.UpdateY(otherPlanets[2:])
+		C.UpdateY(otherPlanets[3:])
+		D.UpdateY(otherPlanets[4:])
+		checksum := A.CheckSum() + B.CheckSum() + C.CheckSum() + D.CheckSum()
+
+		if check == checksum {
+			return steps
+		}
+		steps++
+	}
+}
+
+func Z() int {
+	A := NewPlanet(8, 0, 8)
+	B := NewPlanet(0, -5, -10)
+	C := NewPlanet(16, 10, -5)
+	D := NewPlanet(19, -10, -7)
+	otherPlanets := []*Planet{A, B, C, D}
+	steps := 0
+	// xmatch, ymatch, zmatch := false, false, false
+	// states := []string{}
+	check := A.CheckSum() + B.CheckSum() + C.CheckSum() + D.CheckSum()
 	for {
 		A.UpdateZ(otherPlanets[1:])
 		B.UpdateZ(otherPlanets[2:])
 		C.UpdateZ(otherPlanets[3:])
 		D.UpdateZ(otherPlanets[4:])
 		checksum := A.CheckSum() + B.CheckSum() + C.CheckSum() + D.CheckSum()
-		match := false
-		for _, v := range states {
-			if v == checksum {
-				match = true
-				break
-			}
+
+		if check == checksum {
+			return steps
 		}
-		if match {
-			fmt.Printf("[*] Steps - %d\n", steps)
-			break
-		} else {
-			states = append(states, checksum)
-		}
+		// states = append(states, checksum)
 		steps++
 	}
 }

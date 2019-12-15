@@ -61,6 +61,7 @@ $D = AdventOfCode::Planet->new(19,-10,-7);
 my @states;
 my $steps = 0;
 my @factors;
+my $check = $A->getCheckSum() . $B->getCheckSum() . $C->getCheckSum() . $D->getCheckSum();
 while(1){
     my @temp = @otherPlanets;
     # print "After $index steps:\n";
@@ -73,16 +74,19 @@ while(1){
     shift @temp;
     $D->updateX( \@temp );
 
-    my $checksum = $A->getCheckSumX() . $B->getCheckSumX() . $C->getCheckSumX() . $D->getCheckSumX();
+    my $checksum = $A->getCheckSum() . $B->getCheckSum() . $C->getCheckSum() . $D->getCheckSum();
     
-    my @match = grep{/$checksum/} @states;
-    
-    if (@match > 0){
-        push @factors, $steps;
+    if ($check eq $checksum){
+        print "[*] $steps\n";
         last;
-    }else{
-        push @states, $checksum;
     }
+    
+    # if (@match > 0){
+    #     push @factors, $steps;
+    #     last;
+    # }else{
+    #     push @states, $checksum;
+    # }
     
     # last;
     $steps++;
