@@ -89,7 +89,7 @@ sub updateX {
             @{ $self->@{vel} }[0]--;
             @{ $obj->@{vel} }[0]++;
         }
-        elsif($lhsX <= $rhsX){
+        elsif($lhsX < $rhsX){
             @{ $self->@{vel} }[0]++;
             @{ $obj->@{vel} }[0]--;
         }
@@ -114,7 +114,7 @@ sub updateY {
             @{ $self->@{vel} }[1]--;
             @{ $obj->@{vel} }[1]++;
         }
-        elsif($lhsY <= $rhsY){
+        elsif($lhsY < $rhsY){
             @{ $self->@{vel} }[1]++;
             @{ $obj->@{vel} }[1]--;
         }
@@ -139,7 +139,7 @@ sub updateZ {
             @{ $self->@{vel} }[2]--;
             @{ $obj->@{vel} }[2]++;
         }
-        elsif($lhsZ <= $rhsZ){
+        elsif($lhsZ < $rhsZ){
             @{ $self->@{vel} }[2]++;
             @{ $obj->@{vel} }[2]--;
         }

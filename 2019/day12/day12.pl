@@ -48,14 +48,14 @@ for my $planet (@otherPlanets){
 
 print "[*] Part1 - Total Energy: $total\n";
 
-# $A = AdventOfCode::Planet->new(8,0,8);
-# $B = AdventOfCode::Planet->new(0,-5,-10);
-# $C = AdventOfCode::Planet->new(16,10,-5);
-# $D = AdventOfCode::Planet->new(19,-10,-7);
-$A = AdventOfCode::Planet->new( -1, 0,   2 );
-$B = AdventOfCode::Planet->new( 2,  -10, -7 );
-$C = AdventOfCode::Planet->new( 4,  -8,  8 );
-$D = AdventOfCode::Planet->new( 3,  5,   -1 );
+$A = AdventOfCode::Planet->new(8,0,8);
+$B = AdventOfCode::Planet->new(0,-5,-10);
+$C = AdventOfCode::Planet->new(16,10,-5);
+$D = AdventOfCode::Planet->new(19,-10,-7);
+# $A = AdventOfCode::Planet->new( -1, 0,   2 );
+# $B = AdventOfCode::Planet->new( 2,  -10, -7 );
+# $C = AdventOfCode::Planet->new( 4,  -8,  8 );
+# $D = AdventOfCode::Planet->new( 3,  5,   -1 );
 @otherPlanets = ( $A, $B, $C, $D );
 
 my @states;
@@ -65,15 +65,15 @@ while(1){
     my @temp = @otherPlanets;
     # print "After $index steps:\n";
     shift @temp;
-    $A->update( \@temp );
+    $A->updateX( \@temp );
     shift @temp;
-    $B->update( \@temp );
+    $B->updateX( \@temp );
     shift @temp;
-    $C->update( \@temp );
+    $C->updateX( \@temp );
     shift @temp;
-    $D->update( \@temp );
+    $D->updateX( \@temp );
 
-    my $checksum = $A->getCheckSum() . $B->getCheckSum() . $C->getCheckSum() . $D->getCheckSum();
+    my $checksum = $A->getCheckSumX() . $B->getCheckSumX() . $C->getCheckSumX() . $D->getCheckSumX();
     
     my @match = grep{/$checksum/} @states;
     
@@ -88,6 +88,6 @@ while(1){
     $steps++;
 }
 
-
-my $factor = lcm(@factors);
-print "[*] $factors[0]\n";
+# 18 28 44
+# my $factor = @factors;
+print "[*] Part2 - $factors[0]\n";
