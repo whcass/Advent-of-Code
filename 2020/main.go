@@ -1,7 +1,7 @@
 package main
 
 import (
-	"fmt"
+	"github.com/whcass/Advent-of-Code/2020/helpers"
 	"github.com/whcass/Advent-of-Code/2020/interfaces"
 	"github.com/whcass/Advent-of-Code/2020/solutions"
 )
@@ -14,11 +14,11 @@ func main() {
 		solutions.NewDay3(),
 	}
 
-	fmt.Println("[*] Running solutions")
+	helpers.PrintColour("[*] Running solutions\n", helpers.Teal)
 	for _, solution := range solutionsToRun {
-		fmt.Printf("\033[1;34m%s\033[0m", "===========================================")
-		fmt.Println("")
+		helpers.PrintColour("===========================================\n", helpers.Magenta)
 		solution.Run()
+		helpers.PrintColour("[*] Done.\n", helpers.Green)
 	}
-	fmt.Println("===========================================")
+	helpers.PrintColour("===========================================\n", helpers.Magenta)
 }

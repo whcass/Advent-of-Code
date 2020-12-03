@@ -21,7 +21,6 @@ func (d Day1) Run() {
 	sliceData := strings.Split(input, "\r\n")
 	d.Part1(sliceData)
 	d.Part2(sliceData)
-	fmt.Println("[*] Done.")
 }
 
 func (d Day1) Part2(sliceData []string) {

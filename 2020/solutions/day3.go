@@ -40,7 +40,7 @@ func (d Day3) Part2(slopeMap [][]string) {
 	slopeMult := 1
 	for _, slope := range slopes {
 		treeCount := checkSlope(slopeMap, slope[0], slope[1])
-		fmt.Printf("[+] Trees encountered: %d\n", treeCount)
+		//fmt.Printf("[+] Trees encountered: %d\n", treeCount)
 		slopeMult *= treeCount
 	}
 
