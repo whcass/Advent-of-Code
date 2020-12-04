@@ -15,11 +15,14 @@ func NewDay3() *Day3 {
 }
 
 func (d Day3) Run() {
-	helpers.PrintInfo(d.Title)
 	input := helpers.GetInput("day3.txt")
 	slopeMap := generateSlopeMap(input)
 	d.Part1(slopeMap)
 	d.Part2(slopeMap)
+}
+
+func (d Day3) GetTitle() string {
+	return d.Title
 }
 
 func (d Day3) Part1(slopeMap [][]string) {

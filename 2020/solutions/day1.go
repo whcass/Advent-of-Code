@@ -15,9 +15,12 @@ func NewDay1() *Day1 {
 	return &Day1{Title: "Day 1"}
 }
 
+func (d Day1) GetTitle() string {
+	return d.Title
+}
+
 func (d Day1) Run() {
 	input := helpers.GetInput("day1.txt")
-	helpers.PrintInfo(d.Title)
 	sliceData := strings.Split(input, "\r\n")
 	d.Part1(sliceData)
 	d.Part2(sliceData)
