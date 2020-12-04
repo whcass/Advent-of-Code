@@ -21,6 +21,7 @@ func (d Day4) Run() {
 	passports := d.GeneratePassports(inputData)
 
 	d.Part1(passports)
+	d.Part2(passports)
 }
 
 func (d Day4) GeneratePassports(inputData []string) []*entities.Passport {
@@ -28,8 +29,6 @@ func (d Day4) GeneratePassports(inputData []string) []*entities.Passport {
 	var passports []*entities.Passport
 	for i := 0; i < len(inputData); i++ {
 		if inputData[i] == "" {
-			//fmt.Println(passPortString)
-			//fmt.Println()
 			newPassport := entities.NewPassportFromString(passPortString)
 			passports = append(passports, newPassport)
 			passPortString = ""
@@ -44,7 +43,7 @@ func (d Day4) GeneratePassports(inputData []string) []*entities.Passport {
 func (d Day4) Part1(passports []*entities.Passport) {
 	validCount := 0
 	for _, passport := range passports {
-		if passport.Check() {
+		if passport.CheckBlanks() {
 			validCount++
 		}
 	}
@@ -52,6 +51,18 @@ func (d Day4) Part1(passports []*entities.Passport) {
 	fmt.Printf("[*] Valid Passports: %d\n", validCount)
 }
 
+func (d Day4) Part2(passports []*entities.Passport) {
+	validCount := 0
+	for _, passport := range passports {
+		if passport.Check() {
+			validCount++
+		} else {
+			fmt.Println(passport)
+		}
+	}
+
+	fmt.Printf("[*] Valid Passports: %d\n", validCount)
+}
 func (d Day4) GetTitle() string {
 	return d.Title
 }

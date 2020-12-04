@@ -1,6 +1,9 @@
 package entities
 
 import (
+	"fmt"
+	"regexp"
+	"strconv"
 	"strings"
 )
 
@@ -55,7 +58,7 @@ func NewPassportFromString(s string) *Passport {
 	return &pp
 }
 
-func (p Passport) checkBlanks() bool {
+func (p Passport) CheckBlanks() bool {
 	if p.BirthYear == "" {
 		return false
 	} else if p.IssueYear == "" {
@@ -76,5 +79,104 @@ func (p Passport) checkBlanks() bool {
 }
 
 func (p Passport) Check() bool {
-	return p.checkBlanks()
+	valid := p.CheckBlanks()
+	if !valid {
+		return false
+	}
+
+	valid = p.validateFields()
+	if !valid {
+		return false
+	}
+
+	return true
+}
+
+func (p Passport) validateFields() bool {
+	// Birth Year
+	bYear, err := strconv.Atoi(p.BirthYear)
+	if err != nil {
+		panic(err)
+	}
+	if bYear < 1920 || bYear > 2002 {
+		fmt.Println("Invalid Birth Year")
+		return false
+	}
+
+	// Issue Year
+	iYear, err := strconv.Atoi(p.IssueYear)
+	if err != nil {
+		panic(err)
+	}
+	if iYear < 2010 || iYear > 2020 {
+		fmt.Println("Invalid Issue Year")
+		return false
+	}
+
+	// Expiration Year
+	eYear, err := strconv.Atoi(p.Expiration)
+	if err != nil {
+		panic(err)
+	}
+	if eYear < 2020 || eYear > 2030 {
+		fmt.Println("Invalid Expiration Year")
+		return false
+	}
+
+	// Height
+	if strings.HasSuffix(p.Height, "cm") {
+		height, err := strconv.Atoi(p.Height[:len(p.Height)-2])
+		if err != nil {
+			panic(err)
+		}
+		if height < 150 || height > 193 {
+			fmt.Println("Invalid Height")
+			return false
+		}
+	} else if strings.HasSuffix(p.Height, "in") {
+		height, err := strconv.Atoi(p.Height[:len(p.Height)-2])
+		if err != nil {
+			panic(err)
+		}
+		if height < 59 || height > 76 {
+			fmt.Println("Invalid Height")
+			return false
+		}
+	} else {
+		fmt.Println("Invalid Height - No Suffix")
+		return false
+	}
+
+	// Hair Colour
+	if len(p.HairColour) != 7 {
+		fmt.Println("Hair Colour not long enough")
+		return false
+	}
+	hairValid, err := regexp.MatchString("#[0-9]*[a-f]*", p.HairColour)
+	if err != nil {
+		panic(err)
+	}
+	if !hairValid {
+		fmt.Println("Hair Invalid")
+		return false
+	}
+
+	if !(p.EyeColour == "amb" || p.EyeColour == "blu" || p.EyeColour == "brn" || p.EyeColour == "gry" || p.EyeColour == "grn" || p.EyeColour == "hzl" || p.EyeColour == "oth") {
+		fmt.Println("Eye Colour Invalid")
+		return false
+	}
+
+	if len(p.ID) != 9 {
+		fmt.Println("Passport ID Invalid - not long enough")
+		return false
+	}
+	passportIDValid, err := regexp.MatchString("[0-9]{9}", p.ID)
+	if err != nil {
+		panic(err)
+	}
+	if !passportIDValid {
+		fmt.Println("Passport ID Invalid")
+		return false
+	}
+	return true
 }
