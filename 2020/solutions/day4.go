@@ -56,8 +56,6 @@ func (d Day4) Part2(passports []*entities.Passport) {
 	for _, passport := range passports {
 		if passport.Check() {
 			validCount++
-		} else {
-			fmt.Println(passport)
 		}
 	}
 

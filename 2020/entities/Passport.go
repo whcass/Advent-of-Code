@@ -1,7 +1,6 @@
 package entities
 
 import (
-	"fmt"
 	"regexp"
 	"strconv"
 	"strings"
@@ -99,7 +98,7 @@ func (p Passport) validateFields() bool {
 		panic(err)
 	}
 	if bYear < 1920 || bYear > 2002 {
-		fmt.Println("Invalid Birth Year")
+		//fmt.Println("Invalid Birth Year")
 		return false
 	}
 
@@ -109,7 +108,7 @@ func (p Passport) validateFields() bool {
 		panic(err)
 	}
 	if iYear < 2010 || iYear > 2020 {
-		fmt.Println("Invalid Issue Year")
+		//fmt.Println("Invalid Issue Year")
 		return false
 	}
 
@@ -119,7 +118,7 @@ func (p Passport) validateFields() bool {
 		panic(err)
 	}
 	if eYear < 2020 || eYear > 2030 {
-		fmt.Println("Invalid Expiration Year")
+		//fmt.Println("Invalid Expiration Year")
 		return false
 	}
 
@@ -130,7 +129,7 @@ func (p Passport) validateFields() bool {
 			panic(err)
 		}
 		if height < 150 || height > 193 {
-			fmt.Println("Invalid Height")
+			//fmt.Println("Invalid Height")
 			return false
 		}
 	} else if strings.HasSuffix(p.Height, "in") {
@@ -139,17 +138,17 @@ func (p Passport) validateFields() bool {
 			panic(err)
 		}
 		if height < 59 || height > 76 {
-			fmt.Println("Invalid Height")
+			//fmt.Println("Invalid Height")
 			return false
 		}
 	} else {
-		fmt.Println("Invalid Height - No Suffix")
+		//fmt.Println("Invalid Height - No Suffix")
 		return false
 	}
 
 	// Hair Colour
 	if len(p.HairColour) != 7 {
-		fmt.Println("Hair Colour not long enough")
+		//fmt.Println("Hair Colour not long enough")
 		return false
 	}
 	hairValid, err := regexp.MatchString("#[0-9]*[a-f]*", p.HairColour)
@@ -157,17 +156,17 @@ func (p Passport) validateFields() bool {
 		panic(err)
 	}
 	if !hairValid {
-		fmt.Println("Hair Invalid")
+		//fmt.Println("Hair Invalid")
 		return false
 	}
 
 	if !(p.EyeColour == "amb" || p.EyeColour == "blu" || p.EyeColour == "brn" || p.EyeColour == "gry" || p.EyeColour == "grn" || p.EyeColour == "hzl" || p.EyeColour == "oth") {
-		fmt.Println("Eye Colour Invalid")
+		//fmt.Println("Eye Colour Invalid")
 		return false
 	}
 
 	if len(p.ID) != 9 {
-		fmt.Println("Passport ID Invalid - not long enough")
+		//fmt.Println("Passport ID Invalid - not long enough")
 		return false
 	}
 	passportIDValid, err := regexp.MatchString("[0-9]{9}", p.ID)
@@ -175,7 +174,7 @@ func (p Passport) validateFields() bool {
 		panic(err)
 	}
 	if !passportIDValid {
-		fmt.Println("Passport ID Invalid")
+		//fmt.Println("Passport ID Invalid")
 		return false
 	}
 	return true
