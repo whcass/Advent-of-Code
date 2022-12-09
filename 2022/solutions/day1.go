@@ -2,6 +2,7 @@ package solutions
 
 import (
 	"fmt"
+	"sort"
 	"strconv"
 	"strings"
 
@@ -21,24 +22,24 @@ func (d Day1) GetTitle() string {
 }
 
 func (d Day1) Run() {
-	input := helpers.GetInput("day1.txt")
+	input := helpers.GetInput("1")
 	sliceData := strings.Split(input, "\n")
 	d.Part1(sliceData)
 }
 
 func (d Day1) Part1(sliceData []string) {
 	runningTotal := 0
-	highest := 0
+	var calories []int
 	for i := 0; i < len(sliceData); i++ {
 		if sliceData[i] == "" {
-			if runningTotal > highest {
-				highest = runningTotal
-			}
+			calories = append(calories, runningTotal)
 			runningTotal = 0
 		} else {
 			val, _ := strconv.Atoi(sliceData[i])
 			runningTotal += val
 		}
 	}
-	fmt.Printf("[*] Part 1: %d\n", highest)
+	sort.Sort(sort.Reverse(sort.IntSlice(calories)))
+	fmt.Printf("[*] Part 1: %d\n", calories[0])
+	fmt.Printf("[*] Part 2: %d\n", calories[0]+calories[1]+calories[2])
 }

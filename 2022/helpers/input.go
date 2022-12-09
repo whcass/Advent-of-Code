@@ -6,11 +6,25 @@ import (
 	"strconv"
 )
 
-func GetInput(name string) string {
-	content, err := ioutil.ReadFile("inputs/" + name)
+func GetInput(dayNumber string) string {
+	content, err := ioutil.ReadFile("inputs/day" + dayNumber + ".txt")
 	if err != nil {
 		log.Fatal(err)
 	}
+	// if errors.Is(err, os.ErrNotExist) {
+	// 	url := "https://adventofcode.com/2022/day/" + dayNumber + "/input"
+	// 	res, _ := http.Get(url)
+	// 	fmt.Println(url)
+	// 	fmt.Println(res)
+	// 	defer res.Body.Close()
+	// 	out, err := os.Create("inputs/day" + dayNumber + ".txt")
+	// 	if err != nil {
+	// 		// panic?
+	// 	}
+	// 	defer out.Close()
+	// 	io.Copy(out, res.Body)
+	// 	content, _ = ioutil.ReadFile("inputs/day" + dayNumber + ".txt")
+	// }
 	input := string(content)
 	return input
 }
