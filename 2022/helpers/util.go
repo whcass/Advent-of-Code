@@ -20,3 +20,15 @@ func PrintInfo(title string) {
 func PrintColour(s string, colour string) {
 	fmt.Printf(colour, s)
 }
+
+func Unique(intSlice []interface{}) []byte {
+	keys := make(map[interface{}]bool)
+	list := []byte{}
+	for _, entry := range intSlice {
+		if _, value := keys[entry]; !value {
+			keys[entry] = true
+			list = append(list, entry.(byte))
+		}
+	}
+	return list
+}

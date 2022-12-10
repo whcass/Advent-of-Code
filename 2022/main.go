@@ -12,6 +12,7 @@ func main() {
 	solutionsToRun := []interfaces.Solutions{
 		solutions.NewDay1(),
 		solutions.NewDay2(),
+		solutions.NewDay3(),
 	}
 
 	helpers.PrintColour("[+] Running solutions\n", helpers.Teal)
