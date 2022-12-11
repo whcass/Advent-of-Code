@@ -15,6 +15,7 @@ func main() {
 		solutions.NewDay3(),
 		solutions.NewDay4(),
 		solutions.NewDay5(),
+		solutions.NewDay6(),
 	}
 
 	helpers.PrintColour("[+] Running solutions\n", helpers.Teal)
