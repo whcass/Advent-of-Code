@@ -40,6 +40,6 @@ func (d Day1) Part1(sliceData []string) {
 		}
 	}
 	sort.Sort(sort.Reverse(sort.IntSlice(calories)))
-	fmt.Printf("[*] Part 1: %d\n", calories[0])
-	fmt.Printf("[*] Part 2: %d\n", calories[0]+calories[1]+calories[2])
+	helpers.PrintResult(fmt.Sprintf("Part 1: %d", calories[0]))
+	helpers.PrintResult(fmt.Sprintf("Part 2: %d", calories[0]+calories[1]+calories[2]))
 }

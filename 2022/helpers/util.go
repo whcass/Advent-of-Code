@@ -21,6 +21,10 @@ func PrintColour(s string, colour string) {
 	fmt.Printf(colour, s)
 }
 
+func PrintResult(s string) {
+	PrintColour(fmt.Sprintf("[*] %s\n", s), White)
+}
+
 func Unique(intSlice []interface{}) []byte {
 	keys := make(map[interface{}]bool)
 	list := []byte{}

@@ -33,7 +33,7 @@ func (d Day2) Part1(sliceData []string) {
 		result := parseRound(round[0], round[1])
 		total += result
 	}
-	fmt.Printf("[*] Part 1: %d\n", total)
+	helpers.PrintResult(fmt.Sprintf("Part 1: %d", total))
 }
 
 func (d Day2) Part2(sliceData []string) {
@@ -43,7 +43,7 @@ func (d Day2) Part2(sliceData []string) {
 		result := parseRoundPart2(round[0], round[1])
 		total += result
 	}
-	fmt.Printf("[*] Part 2: %d\n", total)
+	helpers.PrintResult(fmt.Sprintf("Part 2: %d", total))
 }
 
 func getWin(move string) string {

@@ -61,8 +61,7 @@ func (d Day3) Part1(sliceData []string) {
 			}
 		}
 	}
-	// fmt.Printf("[*] Info: %v\n", valueMap)
-	fmt.Printf("[*] Part 1: %d\n", total)
+	helpers.PrintResult(fmt.Sprintf("Part 1: %d", total))
 }
 
 func (d Day3) Part2(sliceData []string) {
@@ -76,5 +75,5 @@ func (d Day3) Part2(sliceData []string) {
 		r := helpers.Unique(intersect.Simple(intersect.Simple(firstElf, secondElf), thirdElf))
 		total += valueMap[string(r)]
 	}
-	fmt.Printf("[*] Part 2: %d\n", total)
+	helpers.PrintResult(fmt.Sprintf("Part 2: %d", total))
 }
