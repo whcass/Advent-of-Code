@@ -41,3 +41,16 @@ func (d Directory) FindDirectory(name string) *Directory {
 	})
 	return directory.(*Directory)
 }
+
+func (d *Directory) CalculateSize() {
+	size := 0
+	for i := 0; i < len(d.Files); i++ {
+		size += d.Files[i].Size
+	}
+
+	for i := 0; i < len(d.Directories); i++ {
+		size += d.Directories[i].Size
+	}
+
+	d.Size = size
+}
