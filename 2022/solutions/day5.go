@@ -61,7 +61,7 @@ func (d Day5) Part(data []string, part int) {
 		d.setStackVal(from, d.stack[from][0:fromLen-move])
 		// fmt.Printf("[*] stack: %v\n", d.stack)
 	}
-	fmt.Printf("[*] Part %d: ", part)
+	helpers.PrintResult(fmt.Sprintf("Part %d: ", part))
 	for j := 1; j < len(d.stack); j++ {
 		stack := d.stack[j]
 		fmt.Printf("%s", stack[len(stack)-1])

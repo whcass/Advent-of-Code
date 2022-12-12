@@ -1,10 +1,15 @@
 package entities
 
+import (
+	"github.com/thoas/go-funk"
+)
+
 type Directory struct {
-	Size   int
-	Files  []*File
-	Name   string
-	Parent *Directory
+	Size        int
+	Files       []*File
+	Directories []*Directory
+	Name        string
+	Parent      *Directory
 }
 
 func NewDirectory(name string, parent *Directory) *Directory {
@@ -18,6 +23,21 @@ func (d *Directory) AddFile(file *File) {
 	} else {
 		d.Files = append(d.Files, file)
 	}
-
 	d.Size += file.Size
+}
+func (d *Directory) AddDirectory(dir *Directory) {
+	if len(d.Directories) == 0 || d.Directories == nil {
+		d.Directories = make([]*Directory, 1)
+		d.Directories[0] = dir
+	} else {
+		d.Directories = append(d.Directories, dir)
+	}
+
+}
+
+func (d Directory) FindDirectory(name string) *Directory {
+	directory := funk.Find(d.Directories, func(dir *Directory) bool {
+		return dir.Name == name
+	})
+	return directory.(*Directory)
 }

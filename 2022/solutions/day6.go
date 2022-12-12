@@ -24,9 +24,9 @@ func (d Day6) Run() {
 	sliceData := strings.Split(input, "\n")
 	stream := strings.Split(sliceData[0], "")
 	answer := d.Part(stream, 4)
-	fmt.Printf("[*] Part 1: %d\n", answer)
+	helpers.PrintResult(fmt.Sprintf("Part 1: %d", answer))
 	answer = d.Part(stream, 14)
-	fmt.Printf("[*] Part 2: %d\n", answer)
+	helpers.PrintResult(fmt.Sprintf("Part 2: %d", answer))
 }
 
 func (d Day6) Part(data []string, markerLength int) int {
