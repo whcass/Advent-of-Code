@@ -39,7 +39,7 @@ func makeStack() [][]string {
 
 func (d Day5) Run() {
 	input := helpers.GetInput("5")
-	sliceData := strings.Split(input, "\n")
+	sliceData := helpers.SplitInput(input)
 	d.Part(sliceData, 1)
 	d.stack = makeStack()
 	d.Part(sliceData, 2)

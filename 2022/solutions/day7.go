@@ -27,7 +27,7 @@ func (d Day7) GetTitle() string {
 
 func (d Day7) Run() {
 	input := helpers.GetInput("7")
-	sliceData := strings.Split(input, "\n")
+	sliceData := helpers.SplitInput(input)
 	d.ConstructFileSystem(sliceData)
 }
 

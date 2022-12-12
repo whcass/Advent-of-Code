@@ -4,6 +4,7 @@ import (
 	"io/ioutil"
 	"log"
 	"strconv"
+	"strings"
 )
 
 func GetInput(dayNumber string) string {
@@ -27,6 +28,10 @@ func GetInput(dayNumber string) string {
 	// }
 	input := string(content)
 	return input
+}
+
+func SplitInput(in string) []string {
+	return strings.Split(in, "\r\n")
 }
 
 func PrepareInput(in []string) []int {

@@ -21,7 +21,7 @@ func (d Day6) GetTitle() string {
 
 func (d Day6) Run() {
 	input := helpers.GetInput("6")
-	sliceData := strings.Split(input, "\n")
+	sliceData := helpers.SplitInput(input)
 	stream := strings.Split(sliceData[0], "")
 	answer := d.Part(stream, 4)
 	helpers.PrintResult(fmt.Sprintf("Part 1: %d", answer))

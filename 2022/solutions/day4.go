@@ -22,7 +22,7 @@ func (d Day4) GetTitle() string {
 
 func (d Day4) Run() {
 	input := helpers.GetInput("4")
-	sliceData := strings.Split(input, "\n")
+	sliceData := helpers.SplitInput(input)
 	d.Part1(sliceData)
 }
 

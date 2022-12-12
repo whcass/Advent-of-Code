@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"sort"
 	"strconv"
-	"strings"
 
 	"github.com/whcass/Advent-of-Code/2022/helpers"
 )
@@ -23,7 +22,7 @@ func (d Day1) GetTitle() string {
 
 func (d Day1) Run() {
 	input := helpers.GetInput("1")
-	sliceData := strings.Split(input, "\n")
+	sliceData := helpers.SplitInput(input)
 	d.Part1(sliceData)
 }
 

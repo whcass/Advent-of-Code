@@ -2,7 +2,6 @@ package solutions
 
 import (
 	"fmt"
-	"strings"
 
 	"github.com/juliangruber/go-intersect"
 	"github.com/whcass/Advent-of-Code/2022/helpers"
@@ -38,7 +37,7 @@ func (d Day3) GetTitle() string {
 
 func (d Day3) Run() {
 	input := helpers.GetInput("3")
-	sliceData := strings.Split(input, "\n")
+	sliceData := helpers.SplitInput(input)
 	d.Part1(sliceData)
 	d.Part2(sliceData)
 }
