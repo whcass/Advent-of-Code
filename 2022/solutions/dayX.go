@@ -1,8 +1,6 @@
 package solutions
 
 import (
-	"strings"
-
 	"github.com/whcass/Advent-of-Code/2022/helpers"
 )
 
@@ -20,7 +18,7 @@ func (d DayX) GetTitle() string {
 
 func (d DayX) Run() {
 	input := helpers.GetInput("X")
-	sliceData := strings.Split(input, "\n")
+	sliceData := helpers.SplitInput(input)
 	d.Part1(sliceData)
 }
 

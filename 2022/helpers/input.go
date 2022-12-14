@@ -31,7 +31,7 @@ func GetInput(dayNumber string) string {
 }
 
 func SplitInput(in string) []string {
-	return strings.Split(in, "\r\n")
+	return strings.Split(in, "\n")
 }
 
 func PrepareInput(in []string) []int {
